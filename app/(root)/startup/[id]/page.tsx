@@ -6,6 +6,9 @@ import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 import markdownit from "markdown-it";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import View from "@/components/View";
 
 const md = markdownit();
 
@@ -18,7 +21,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     notFound();
   }
 
-  const pitch = md.render(post.pitch);
+  const parsedContent = md.render(post?.pitch || "");
 
   return (
     <>
@@ -56,8 +59,19 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
             <p className="category-tag">{post.category}</p>
           </div>
           <h3 className="text-30-bold">Pitch Details</h3>
-          <p className="text-20-regular">{post.pitch}</p>
+          {parsedContent ? (
+            <article
+              className="prose max-w-4xl font-work-sans break-all"
+              dangerouslySetInnerHTML={{ __html: parsedContent }}></article>
+          ) : (
+            <p className="no-result">No pitch details</p>
+          )}
         </div>
+        <hr className="divider" />
+        {/* recommended startups */}
+        <Suspense fallback={<Skeleton className="view_skeleton" />}>
+          <View id={id} />
+        </Suspense>
       </section>
     </>
   );
