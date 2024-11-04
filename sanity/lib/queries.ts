@@ -47,3 +47,16 @@ export const STARTUP_VIEWS_QUERY = defineQuery(
    _id, views
   }`
 );
+
+export const AUTHOR_BY_GITHUB_ID_QUERY = defineQuery(
+  `*[_type=="author" && githubId==$id][0]{
+    _id,
+    id,
+    name,
+    username,
+    image,
+    email,
+    image,
+    bio,
+  }`
+);
