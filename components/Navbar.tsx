@@ -5,7 +5,6 @@ import { auth, signOut, signIn } from "@/auth";
 
 const Navbar = async () => {
   const session = await auth();
-  console.log("🚀 ~ Navbar ~ session:", session);
   return (
     <header className="px-5 py-3 bg-white shadows-sm font-work-sans">
       <nav className="flex justify-between items-center">
@@ -16,12 +15,13 @@ const Navbar = async () => {
           {session && session?.user ? (
             <>
               <Link href="/startup/create">
-                <span>Create An Account</span>
+                <span>Create A Pitch</span>
               </Link>
               <form
                 action={async () => {
                   "use server";
-                  await signOut({ redirectTo: "/" });
+                  //miro.medium.com/v2/resize:fit:720/format:webp/0*QC9djM1wvHqieSNH
+                  https: await signOut({ redirectTo: "/" });
                 }}>
                 <button type="submit">Logout</button>
               </form>
